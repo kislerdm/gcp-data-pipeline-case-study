@@ -31,7 +31,7 @@ service.image.push:
 
 tf.apply:
 	@ cd ./infra/terraform \
-	&& export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/gingko/terraform.json \
+	&& export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/ginkgo/terraform.json \
 	&& terraform init \
 	&& terraform plan \
 	&& terraform apply -auto-approve
