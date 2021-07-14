@@ -79,3 +79,9 @@ resource "google_api_gateway_gateway" "_" {
     layer = "gateway"
   }
 }
+
+resource "google_project_service" "api" {
+  project                    = local.project
+  service                    = google_api_gateway_api._.managed_service
+  disable_dependent_services = true
+}
