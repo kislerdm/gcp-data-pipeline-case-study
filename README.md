@@ -6,6 +6,11 @@
     + [Assumptions](#assumptions)
   * [Platform Architecture](#platform-architecture)
     + [GCP Infrastructure Design](#gcp-infrastructure-design)
+  * [Development](#development)
+    + [Project Structure](#project-structure)
+    + [Requirements](#requirements-1)
+    + [How to run](#how-to-run)
+
 
 ## Objectives
 
@@ -102,7 +107,7 @@ A high level overview of the architecture elements is illustrated on the diagram
 
 - [Service account private key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-gcloud) stored to `${HOME}/.gcp/ginkgo/terraform.json`
 
-#### How to run
+### How to run
 
 - To (re-)deploy the whole stack (only state diff would be re-deployed):
 
