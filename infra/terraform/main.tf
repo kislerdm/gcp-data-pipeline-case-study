@@ -34,3 +34,23 @@ locals {
   project = "data-case-dmitry"
   region  = "europe-west1"
 }
+
+resource "google_project_service" "_" {
+  project = local.project
+  for_each = toset([
+    "iam",
+    "storage",
+    "logging",
+    "run",
+    "servicemanagement",
+    "serviceconsumermanagement",
+    "servicecontrol",
+    "cloudresourcemanager",
+    "compute",
+    "apigateway",
+    "pubsub",
+    "datastore",
+  ])
+  service                    = "${each.value}.googleapis.com"
+  disable_dependent_services = true
+}
