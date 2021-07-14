@@ -22,6 +22,10 @@ IMAGE := $(REPO)/$(SERVICE_NAME):$(IMAGE_TAG)
 
 service.rebuild: service.image.build service.image.push
 
+service.test:
+	@ cd services/lib && go test ./...
+	@ cd services/$(SERVICE_NAME) && go test ./...
+
 service.image.build:
 	@ cd services \
 	&& docker build --build-arg SERVICE=$(SERVICE_NAME) -t $(IMAGE) .
@@ -29,7 +33,7 @@ service.image.build:
 service.image.push:
 	@ docker push $(IMAGE)
 
-tf.apply:
+deploy:
 	@ cd ./infra/terraform \
 	&& export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/ginkgo/terraform.json \
 	&& terraform init \

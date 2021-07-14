@@ -5,6 +5,7 @@
     + [Requirements](#requirements)
     + [Assumptions](#assumptions)
   * [Platform Architecture](#platform-architecture)
+    + [GCP Infrastructure Design](#gcp-infrastructure-design)
 
 ## Objectives
 
@@ -59,3 +60,77 @@ A high level overview of the architecture elements is illustrated on the diagram
 ### GCP Infrastructure Design
 
 ![architecture-gcp](./docu/img/architecture_gcp.jpg)
+
+
+## Development
+
+### Project Structure
+
+```bash
+.
+├── LICENSE
+├── Makefile
+├── README.md
+├── docu
+├── fixture         <- data sample(s)
+├── infra           <- infrastructure resources definition
+└── services        <- submission and processing services codebase
+    ├── Dockerfile
+    ├── lib         <- services common libs/clients
+    ├── models      <- common response models (jsonschema)
+    ├── process     <- data processing service codebase
+    └── submit      <- data submission service codebase
+```
+
+### Requirements
+
+**Tools**:
+
+- [Docker](https://www.docker.com/) *ver. ~= 20.1*
+
+- [terraform](https://www.terraform.io/) *ver. ~= 1.0*
+
+- [GNU make](https://www.gnu.org/software/make/)
+
+- For local dev./testing: [go](https://golang.org/) *ver. 1.16*
+
+**Infra**:
+
+- A GCP project with active billing
+
+- A GCP service account with an extensive access rights (e.g. *project owner*):
+
+- [Service account private key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-gcloud) stored to `${HOME}/.gcp/ginkgo/terraform.json`
+
+#### How to run
+
+- To (re-)deploy the whole stack (only state diff would be re-deployed):
+
+```bash
+make deploy
+```
+
+- To run unit tests:
+
+```bash
+make service.test SERVICE_NAME=submit # submission service
+make service.test SERVICE_NAME=process # processing service
+```
+
+- To build the services' docker images:
+
+```bash
+make service.image.build SERVICE_NAME=submit PROJECT_ID=${GCP_PROJECT} # submission service
+make service.image.build SERVICE_NAME=process PROJECT_ID=${GCP_PROJECT} # processing service
+```
+
+- To push the services' docker images to the GCP container registry:
+
+```bash
+make service.image.push SERVICE_NAME=submit PROJECT_ID=${GCP_PROJECT} # submission service
+make service.image.push SERVICE_NAME=process PROJECT_ID=${GCP_PROJECT} # processing service
+```
+
+**Note**: auth with the GCP registry would be required, see details [here](https://cloud.google.com/container-registry/docs/advanced-authentication).
+
+**Note**: To combine the build and push steps, the command `make service.rebuild` could be used with the arguments `PROJECT_ID` and `SERVICE_NAME`.
