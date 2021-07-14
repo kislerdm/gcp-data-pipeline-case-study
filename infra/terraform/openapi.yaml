@@ -1,0 +1,178 @@
+swagger: "2.0"
+info:
+  title: api "Platform gateway"
+  description: Platform interfaces API contract
+  contact:
+    name: Dmitry Kisler
+    email: admin@dkisler.com
+  license:
+    name: Apache-2.0
+    url: https://opensource.org/licenses/Apache-2.0
+  version: v1.0
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: raw
+    description: Raw data submission.
+  - name: processed
+    description: Read processed data.
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: key
+    in: query
+paths:
+  /raw/healthcheck:
+    get:
+      x-google-backend:
+        address: ${submit_service_url}/healthcheck
+      tags:
+        - raw
+      description: Check the service status.
+      operationId: getStatusRaw
+      responses:
+        "200":
+          description: Success
+  /raw:
+    post:
+      x-google-backend:
+        address: ${submit_service_url}/
+      security:
+        - api_key: []
+      tags:
+        - raw
+      description: Publish a row data sample to the platform.
+      operationId: publishRawData
+      parameters:
+        - name: submission_data_req
+          in: body
+          description: Data sample.
+          schema:
+            $ref: "#/definitions/${submission_data_req}"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/${submission_resp_ok}"
+        "400":
+          description: Invalid input
+          schema:
+            $ref: "#/definitions/${submission_resp_fail}"
+        "500":
+          description: Service internal error
+          schema:
+            $ref: "#/definitions/${submission_resp_fail}"
+  /raw/submission/{submission_id}:
+    get:
+      x-google-backend:
+        address: ${submit_service_url}/{submission_id}
+      security:
+        - api_key: []
+      tags:
+        - raw
+      description: Fetch previously submitted raw data sample.
+      operationId: getRawDataBySubmissionID
+      parameters:
+        - name: submission_id
+          in: path
+          description: Raw data submission ID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/${submission_data_req}"
+        "404":
+          description: Data not found
+          schema:
+            $ref: "#/definitions/${error}"
+        "500":
+          description: Service internal error
+          schema:
+            $ref: "#/definitions/${error}"
+  /processed/healthcheck:
+    get:
+      x-google-backend:
+        address: ${process_service_url}/healthcheck
+      tags:
+        - processed
+      description: Check the service status.
+      operationId: getStatusProcessed
+      responses:
+        "200":
+          description: Success
+  /processed/fetch:
+    get:
+      x-google-backend:
+        address: ${process_service_url}/fetch
+      tags:
+        - processed
+      description: Bulk fetch processed data.
+      operationId: fetchProcessedData
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the length of response list.
+          required: false
+          type: number
+          minimum: 0
+          default: 100
+        - name: offset
+          in: query
+          description: How many db records to be skipped when reading.
+          required: false
+          type: number
+          minimum: 0
+          default: 0
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/${process_resp}"
+        "500":
+          description: Service internal error
+          schema:
+            $ref: "#/definitions/${error}"
+  /processed/query:
+    post:
+      x-google-backend:
+        address: ${process_service_url}/query
+      tags:
+        - processed
+      description: Bulk fetch pre-filtered processed data.
+      operationId: fetchProcessedDataWithFilter
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the length of response list.
+          required: false
+          type: number
+          minimum: 0
+          default: 100
+        - name: offset
+          in: query
+          description: How many db records to be skipped when reading.
+          required: false
+          type: number
+          minimum: 0
+          default: 0
+        - name: process_query_req
+          in: body
+          description: Filtering query to fetch processed data.
+          schema:
+            $ref: "#/definitions/${process_query_req}"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/${process_resp}"
+        "500":
+          description: Service internal error
+          schema:
+            $ref: "#/definitions/${error}"

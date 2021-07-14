@@ -15,11 +15,5 @@
 variable "prefix" {
   type        = string
   description = "Bucket prefix."
-  default     = "ginkgo"
-}
-
-variable "project" {
-  type        = string
-  description = "GCP Project ID"
-  default     = ""
+  default     = "data-case-dmitry"
 }

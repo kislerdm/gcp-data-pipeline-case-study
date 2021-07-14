@@ -20,8 +20,8 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "gingko-tf"
-    prefix = "terraform/state"
+    bucket = "data-case-dmitry-tf"
+    prefix = "terraform/state/prod"
   }
 }
 
@@ -31,6 +31,6 @@ provider "google" {
 }
 
 locals {
-  project = var.project == "" ? "data-case-dmitry" : var.project
+  project = "data-case-dmitry"
   region  = "europe-west1"
 }
