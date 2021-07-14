@@ -22,8 +22,6 @@ import (
 	"platform/lib/api/http"
 	"platform/submit/models"
 	"sync"
-
-	"github.com/goccy/go-json"
 )
 
 var wg sync.WaitGroup
@@ -41,10 +39,6 @@ func submit(runner *runner, bucket *string) http.Action {
 
 		payloadToDispatch := NewPayloadHotStorage(submitterID, r.Body, validErrs == nil)
 
-		payloadHotStorage, err := json.Marshal(payloadToDispatch)
-		if err != nil {
-			return nil, err
-		}
 		keyColdStorage := path.Join(
 			payloadToDispatch.SubmitterID,
 			payloadToDispatch.SubmissionID,
