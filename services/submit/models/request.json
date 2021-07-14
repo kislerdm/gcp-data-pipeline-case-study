@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "Ingress raw data",
+    "required": [
+        "time_stamp",
+        "data"
+    ],
+    "properties": {
+        "time_stamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 1
+        }
+    },
+    "additionalItems": false
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "Ingress raw data response",
+    "required": [
+        "submission_id",
+        "errors"
+    ],
+    "properties": {
+        "submission_id": {
+            "description": "Submission ID.",
+            "type": "string",
+            "format": "uuid"
+        },
+        "errors": {
+            "description": "List of errors in case of any.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalItems": false
+}

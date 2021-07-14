@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "array",
+    "description": "Processed data response object.",
+    "items": {
+        "type": "object",
+        "required": [
+            "submission_id",
+            "payload"
+        ],
+        "properties": {
+            "submission_id": {
+                "description": "Submission ID.",
+                "type": "string",
+                "format": "uuid"
+            },
+            "payload": {
+                "type": "object",
+                "description": "Processed data point.",
+                "required": [
+                    "timestamp",
+                    "mean",
+                    "standard_deviation"
+                ],
+                "properties": {
+                    "timestamp": {
+                        "description": "Timestamp in UTC.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "mean": {
+                        "description": "Mean value of the raw data distribution.",
+                        "type": "number"
+                    },
+                    "standard_deviation": {
+                        "description": "Standard deviation of the raw data distribution.",
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    },
+    "additionalItems": false
+}

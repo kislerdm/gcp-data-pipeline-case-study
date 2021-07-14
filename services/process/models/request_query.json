@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "description": "Processed data query",
+    "oneOf": [
+        {
+            "required": [
+                "timestamp"
+            ],
+            "properties": {
+                "timestamp": {
+                    "type": "object",
+                    "description": "Timestamp filter in UTC",
+                    "properties": {
+                        "min": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "max": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "required": [
+                "mean"
+            ],
+            "properties": {
+                "mean": {
+                    "type": "object",
+                    "description": "Mean value filter",
+                    "properties": {
+                        "min": {
+                            "type": "number"
+                        },
+                        "max": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "required": [
+                "standard_deviation"
+            ],
+            "properties": {
+                "standard_deviation": {
+                    "type": "object",
+                    "description": "Standard deviation filter",
+                    "properties": {
+                        "min": {
+                            "type": "number"
+                        },
+                        "max": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

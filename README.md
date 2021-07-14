@@ -1,2 +1,1 @@
-# ginkgo
-Ginkgo Analytics - GCP Data Pipeline Case Study
+# Ginkgo Analytics - GCP Data Pipeline Case Study

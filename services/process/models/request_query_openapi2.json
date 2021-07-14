@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "description": "Processed data query: one of the query parameters must be provided!",
+    "properties": {
+        "timestamp": {
+            "type": "object",
+            "description": "Timestamp filter in UTC",
+            "properties": {
+                "min": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "max": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "mean": {
+            "type": "object",
+            "description": "Mean value filter",
+            "properties": {
+                "min": {
+                    "type": "number"
+                },
+                "max": {
+                    "type": "number"
+                }
+            }
+        },
+        "standard_deviation": {
+            "type": "object",
+            "description": "Standard deviation filter",
+            "properties": {
+                "min": {
+                    "type": "number"
+                },
+                "max": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
