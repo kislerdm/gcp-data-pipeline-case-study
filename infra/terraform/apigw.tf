@@ -42,7 +42,7 @@ resource "google_api_gateway_api_config" "_" {
   provider      = google-beta
   project       = local.project
   api           = google_api_gateway_api._.api_id
-  api_config_id = "cfg"
+  api_config_id = "cfg-${substr(sha256(local.api_config), 0, 5)}"
 
   openapi_documents {
     document {
@@ -51,14 +51,14 @@ resource "google_api_gateway_api_config" "_" {
     }
   }
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   gateway_config {
     backend_config {
       google_service_account = google_service_account.apigw.email
     }
-  }
-
-  lifecycle {
-    create_before_destroy = false
   }
 
   labels = {
@@ -78,6 +78,8 @@ resource "google_api_gateway_gateway" "_" {
   labels = {
     layer = "gateway"
   }
+
+  depends_on = [google_api_gateway_api_config._]
 }
 
 resource "google_project_service" "api" {
