@@ -21,6 +21,7 @@ import (
 	"context"
 
 	"cloud.google.com/go/pubsub"
+	"github.com/goccy/go-json"
 )
 
 var ctx = context.Background()
@@ -99,4 +100,19 @@ func (p *Publisher) WithCCLimit(n int) *Publisher {
 // Push pushes data to the topic.
 func (p *Publisher) Push(data []byte) (id string, err error) {
 	return p.t.Publish(ctx, &pubsub.Message{Data: data}).Get(ctx)
+}
+
+type pubsubMessage struct {
+	Message struct {
+		Data []byte `json:"data"`
+	} `json:"message"`
+}
+
+// ExtractMessage function to extract data from the PubSub message.
+func ExtractMessage(data []byte) ([]byte, error) {
+	var raw *pubsubMessage
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return nil, err
+	}
+	return raw.Message.Data, nil
 }

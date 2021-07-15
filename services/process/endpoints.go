@@ -20,6 +20,7 @@ import (
 	"log"
 	httpStatus "net/http"
 	"platform/lib/api/http"
+	"platform/lib/io/bus/pubsub"
 	"platform/lib/utils"
 	"platform/process/models"
 	"time"
@@ -35,11 +36,18 @@ func defaultReturn() (*http.Response, error) {
 
 func process(runner *runner) http.Action {
 	return func(r *http.Request) (*http.Response, error) {
-		locationDataRaw, err := models.DeserializePayloadLocation(r.Body)
+		triggerPayload, err := pubsub.ExtractMessage(r.Body)
 		if err != nil {
 			runner.Fail.Push([]byte(fmt.Sprintf(`{"error": "%s"}`, err.Error())))
 			return defaultReturn()
 		}
+
+		locationDataRaw, err := models.DeserializePayloadLocation(triggerPayload)
+		if err != nil {
+			runner.Fail.Push([]byte(fmt.Sprintf(`{"error": "%s"}`, err.Error())))
+			return defaultReturn()
+		}
+
 		n := models.Notification{
 			SubmitterID:  locationDataRaw.SubmitterID,
 			SubmissionID: locationDataRaw.SubmissionID,
@@ -49,7 +57,6 @@ func process(runner *runner) http.Action {
 			n.Error = err.Error()
 			runner.Fail.Push(n.MustSerialize())
 		}
-
 		if err != nil {
 			sendFail(err)
 			return defaultReturn()
