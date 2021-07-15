@@ -49,7 +49,7 @@ resource "google_project_service" "_" {
     "compute",
     "apigateway",
     "pubsub",
-    "datastore",
+    "datastore"
   ])
   service                    = "${each.value}.googleapis.com"
   disable_dependent_services = true

@@ -111,6 +111,8 @@ paths:
     get:
       x-google-backend:
         address: ${process_service_url}/fetch
+      security:
+        - api_key: []
       tags:
         - processed
       description: Bulk fetch processed data.
@@ -143,6 +145,8 @@ paths:
     post:
       x-google-backend:
         address: ${process_service_url}/query
+      security:
+        - api_key: []
       tags:
         - processed
       description: Bulk fetch pre-filtered processed data.
