@@ -47,4 +47,4 @@ jobs:
         run: |
           git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
           git remote add gcp https://source.developers.google.com/p/${{ env.GCP_PROJECT }}/r/platform
-          git push gcp master
+          git push -f gcp master
