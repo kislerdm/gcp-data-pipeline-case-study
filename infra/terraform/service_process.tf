@@ -119,3 +119,49 @@ resource "google_cloud_run_service" "process" {
     null_resource.process_docker_rebuild,
   ]
 }
+
+resource "google_service_account" "trigger_process" {
+  project      = local.project
+  account_id   = "trigger-processing"
+  display_name = "trigger-processing"
+  description  = "Account to invoke data processing service."
+}
+
+resource "google_cloud_run_service_iam_member" "trigger_process" {
+  project  = local.project
+  location = local.region
+  service  = google_cloud_run_service.process.name
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.trigger_process.email}"
+}
+
+resource "google_pubsub_subscription" "process" {
+  project = local.project
+  name    = "trigger-data_processing"
+  topic   = google_pubsub_topic._["submission"].name
+  push_config {
+    push_endpoint = "${google_cloud_run_service.process.status[0].url}/"
+    oidc_token {
+      service_account_email = google_service_account.trigger_process.email
+    }
+  }
+
+  ack_deadline_seconds       = 600
+  message_retention_duration = "600s"
+  retain_acked_messages      = false
+
+  expiration_policy {
+    ttl = ""
+  }
+
+  retry_policy {
+    minimum_backoff = "600s"
+    maximum_backoff = "600s"
+  }
+
+  depends_on = [
+    google_cloud_run_service.process,
+    google_pubsub_topic._,
+    google_service_account.trigger_process,
+  ]
+}
