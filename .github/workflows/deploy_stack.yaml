@@ -15,14 +15,12 @@ jobs:
     env:
       DOCKER_CLI_EXPERIMENTAL: 'enabled'
       DOCKER_BUILDKIT: 1
-      TF_PATH: 'infra/terraform'
-      GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
 
     steps:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${{ env.GCP_PROJECT }}
+          project_id: ${{ secrets.GCP_PROJECT }}
           service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_CONTENT }}
           export_default_credentials: true
           credentials_file_path: /tmp/key.json
@@ -42,9 +40,3 @@ jobs:
 
       - name: Redeploy Stack
         run: make deploy
-
-      - name: Sync with GCP Repo
-        run: |
-          git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
-          git remote add gcp https://source.developers.google.com/p/${{ env.GCP_PROJECT }}/r/platform
-          git push -f gcp master
