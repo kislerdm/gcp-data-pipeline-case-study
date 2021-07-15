@@ -42,3 +42,9 @@ jobs:
 
       - name: Redeploy Stack
         run: make deploy
+
+      - name: Sync with GCP Repo
+        run: |
+          git config --global credential.'https://source.developers.google.com'.helper gcloud.sh
+          git remote add gcp https://source.developers.google.com/p/${{ env.GCP_PROJECT }}/r/platform
+          git push gcp master
