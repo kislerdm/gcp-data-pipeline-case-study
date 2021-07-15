@@ -92,7 +92,7 @@ func submit(runner *runner, bucket *string) http.Action {
 
 func read(runner *runner, bucket *string) http.Action {
 	return func(r *http.Request) (*http.Response, error) {
-		submissionID, ok := r.RouteParameters["submission_id"]
+		submissionID, ok := r.Query["submission_id"]
 		if !ok {
 			return http.NewResponse([]byte(`{"error": "missing submission_id"}`), httpStatus.StatusBadRequest), nil
 		}

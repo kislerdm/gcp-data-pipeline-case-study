@@ -47,8 +47,8 @@ var (
 
 func setServer(bucket string) {
 	endpoints := map[string]*http.HandlerEndpoint{
-		"/":                 http.NewHandlerEndpoint(submit(r, &bucket), []string{"POST"}),
-		"/{:submission_id}": http.NewHandlerEndpoint(read(r, &bucket), []string{"GET"}),
+		"/":     http.NewHandlerEndpoint(submit(r, &bucket), []string{"POST"}),
+		"/read": http.NewHandlerEndpoint(read(r, &bucket), []string{"GET"}),
 	}
 	handlers := http.NewRequestHandlers(endpoints).WithDefaultHeaders(
 		map[string]string{
