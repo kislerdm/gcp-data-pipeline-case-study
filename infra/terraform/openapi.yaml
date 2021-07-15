@@ -69,7 +69,7 @@ paths:
   /raw/submission/{submission_id}:
     get:
       x-google-backend:
-        address: ${submit_service_url}/{submission_id}
+        address: ${submit_service_url}/read
       security:
         - api_key: []
       tags:
