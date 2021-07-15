@@ -107,6 +107,12 @@ A high level overview of the architecture elements is illustrated on the diagram
 
 - [Service account private key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-gcloud) stored to `${HOME}/.gcp/ginkgo/terraform.json`
 
+**Note** Don't forget to export the key path as envvar:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/ginkgo/terraform.json
+```
+
 ### How to run
 
 - To (re-)deploy the whole stack (only state diff would be re-deployed):
