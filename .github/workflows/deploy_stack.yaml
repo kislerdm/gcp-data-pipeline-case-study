@@ -1,0 +1,44 @@
+name: Deploy Stack
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'services/**'
+      - 'infra/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    env:
+      DOCKER_CLI_EXPERIMENTAL: 'enabled'
+      DOCKER_BUILDKIT: 1
+      TF_PATH: 'infra/terraform'
+      GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_CONTENT }}
+          export_default_credentials: true
+          credentials_file_path: /tmp/key.json
+
+      - name: Auth with eu.gcr.io
+        run: gcloud auth configure-docker
+
+      - name: Install terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.1
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Redeploy Stack
+        run: make deploy
