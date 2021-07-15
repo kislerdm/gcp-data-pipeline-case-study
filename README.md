@@ -6,6 +6,7 @@
     + [Assumptions](#assumptions)
   * [Platform Architecture](#platform-architecture)
     + [GCP Infrastructure Design](#gcp-infrastructure-design)
+  * [Demo](#demo)
   * [Development](#development)
     + [Project Structure](#project-structure)
     + [Requirements](#requirements-1)
@@ -65,7 +66,6 @@ A high level overview of the architecture elements is illustrated on the diagram
 ### GCP Infrastructure Design
 
 ![architecture-gcp](./docu/img/architecture_gcp.jpg)
-
 
 ## Demo
 
