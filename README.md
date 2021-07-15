@@ -11,7 +11,7 @@
     + [Project Structure](#project-structure)
     + [Requirements](#requirements-1)
     + [How to run](#how-to-run)
-
+  * [Further Steps](#further-steps)
 
 ## Objectives
 
@@ -69,7 +69,7 @@ A high level overview of the architecture elements is illustrated on the diagram
 
 ## Demo
 
-API contract can be found [here](https://app.swaggerhub.com/apis/kislerdm/ginkgo/v1.0).
+Interactive API contract can be found [here](https://app.swaggerhub.com/apis/kislerdm/ginkgo/v1.0). To communicate with the platform, please request the API access key.
 
 ## Development
 
@@ -117,7 +117,7 @@ API contract can be found [here](https://app.swaggerhub.com/apis/kislerdm/ginkgo
 export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/ginkgo/terraform.json
 ```
 
-### How to run
+### How to Run
 
 - To (re-)deploy the whole stack (only state diff would be re-deployed):
 
@@ -149,3 +149,35 @@ make service.image.push SERVICE_NAME=process PROJECT_ID=${GCP_PROJECT} # process
 **Note**: auth with the GCP registry would be required, see details [here](https://cloud.google.com/container-registry/docs/advanced-authentication).
 
 **Note**: To combine the build and push steps, the command `make service.rebuild` could be used with the arguments `PROJECT_ID` and `SERVICE_NAME`.
+
+## Further Steps
+
+### User Facing
+
+- Add authentication step for users to be able to request an access token
+
+### Security
+
+- Replace API key authentication with the OAuth2 protocol compliant system
+
+### Ops
+
+- Add monitoring and alerts notifications system
+
+- Perform load test and define SLA
+
+### CD
+
+- Improve unit tests coverage
+
+- Add smoke tests
+
+### Applications
+
+- Perform CPU/memory/execution time profiling
+
+- Depending on followup requirements to scalability and on profiling results, it may be required to re-design the applications, or consider different technologies
+
+### Infra
+
+- Depending on followup requirements to scalability and on load tests results, it may be required to migrate the services onto a k8s cluster
