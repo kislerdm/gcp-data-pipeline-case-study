@@ -67,6 +67,10 @@ A high level overview of the architecture elements is illustrated on the diagram
 ![architecture-gcp](./docu/img/architecture_gcp.jpg)
 
 
+## Demo
+
+API contract can be found [here](https://app.swaggerhub.com/apis/kislerdm/ginkgo/v1.0).
+
 ## Development
 
 ### Project Structure
