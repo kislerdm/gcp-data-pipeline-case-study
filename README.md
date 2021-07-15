@@ -75,7 +75,7 @@ A high level overview of the architecture elements is illustrated on the diagram
 
 ## Demo
 
-Interactive API contract can be found [here](https://app.swaggerhub.com/apis/kislerdm/ginkgo/v1.0). To communicate with the platform, please request the API access key.
+Interactive API contract can be found [here](https://app.swaggerhub.com/apis-docs/kislerdm/ginkgo/v1.0). To communicate with the platform, please request the API access key.
 
 ## Development
 
