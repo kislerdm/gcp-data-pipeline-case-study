@@ -10,8 +10,14 @@
   * [Development](#development)
     + [Project Structure](#project-structure)
     + [Requirements](#requirements-1)
-    + [How to run](#how-to-run)
+    + [How to Run](#how-to-run)
   * [Further Steps](#further-steps)
+    + [User Facing](#user-facing)
+    + [Security](#security)
+    + [Ops](#ops)
+    + [CD](#cd)
+    + [Applications](#applications)
+    + [Infra](#infra)
 
 ## Objectives
 
