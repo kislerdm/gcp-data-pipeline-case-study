@@ -1,4 +1,4 @@
-# Ginkgo Analytics - GCP Data Pipeline Case Study <!-- omit in toc -->
+# GCP Data Pipeline Case Study <!-- omit in toc -->
 
 ## Table of Contents <!-- omit in toc -->
   * [Objectives](#objectives)
@@ -73,10 +73,6 @@ A high level overview of the architecture elements is illustrated on the diagram
 
 ![architecture-gcp](./docu/img/architecture_gcp.jpg)
 
-## Demo
-
-Interactive API contract can be found [here](https://app.swaggerhub.com/apis-docs/kislerdm/ginkgo/v1.0). To communicate with the platform, please request the API access key.
-
 ## Development
 
 ### Project Structure
@@ -115,12 +111,12 @@ Interactive API contract can be found [here](https://app.swaggerhub.com/apis-doc
 
 - A GCP service account with an extensive access rights (e.g. *project owner*):
 
-- [Service account private key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-gcloud) stored to `${HOME}/.gcp/ginkgo/terraform.json`
+- [Service account private key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-gcloud) stored to `${HOME}/.gcp/gcp-demo/terraform.json`
 
 **Note** Don't forget to export the key path as envvar:
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/ginkgo/terraform.json
+export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/.gcp/gcp-demo/terraform.json
 ```
 
 ### How to Run
