@@ -21,7 +21,7 @@
 
 ## Objectives
 
-**The goal**: to build an event-driven platform to persist and process semi-structured data submitted over an HTTP interface. Find detailed description of the project [here](./docu/description.pdf).
+**The goal**: to build an event-driven platform to persist and process semi-structured data submitted over an HTTP interface.
 
 ### Requirements
 
